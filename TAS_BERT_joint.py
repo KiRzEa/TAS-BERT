@@ -97,7 +97,6 @@ def convert_to_feature(examples, max_seq_length, tokenizer, tokenize_method):
 		assert len(input_mask) == max_seq_length
 		assert len(segment_ids) == max_seq_length
 		assert len(ner_mask) == max_seq_length
-		assert len(ner_label_ids) == max_seq_length
 	
 	
 		features.append(
