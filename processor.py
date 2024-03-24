@@ -5,6 +5,7 @@
 import csv
 import os
 import tokenization
+import string
 
 
 class InputExample(object):
@@ -105,7 +106,15 @@ class Semeval_Processor(DataProcessor):
         print(ner_labels)
         return ner_labels
 
-    def _create_examples(self, lines, set_type):
+    def create_inference_example(self, text, compose_set):
+        examples = []
+        punctuations = string.punctuation
+        text = text.translate(str.maketrans('', '', punctuations))
+        for x in compose_set:
+            examples.append(InputExample(guid=None, text_a=text, text_b=x)
+        return examples
+    
+    def _create_examples(self, lines, set_type, inference_mode):
         """Creates examples."""
         examples = []
         for (i, line) in enumerate(lines):
