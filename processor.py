@@ -111,7 +111,7 @@ class Semeval_Processor(DataProcessor):
         punctuations = string.punctuation
         text = text.translate(str.maketrans('', '', punctuations))
         for x in compose_set:
-            examples.append(InputExample(guid=None, text_a=text, text_b=x)
+            examples.append(InputExample(guid=None, text_a=text, text_b=x))
         return examples
     
     def _create_examples(self, lines, set_type, inference_mode):
