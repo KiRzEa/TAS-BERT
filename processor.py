@@ -107,7 +107,7 @@ class Semeval_Processor(DataProcessor):
         return ner_labels
 
     def create_inference_example(self, text, compose_set):
-        examples = []https://github.com/KiRzEa/TAS-BERT/blob/master/processor.py
+        examples = []
         punctuations = string.punctuation
         text = text.translate(str.maketrans('', '', punctuations))
         for x in compose_set:
