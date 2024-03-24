@@ -44,8 +44,11 @@ class BertForTABSAJoint_CRF(nn.Module):
 		self.apply(init_weights)
 
 	def forward(self, input_ids, token_type_ids, attention_mask, labels, ner_labels, ner_mask):
-		all_encoder_layers, pooled_output = self.bert(input_ids, token_type_ids, attention_mask)
+		outputs = self.bert(input_ids, token_type_ids, attention_mask)
+		sequence_output = outputs.last_hidden_state
+		pooled_output = outputs.pooler_output
 		# get the last hidden layer
+		
 		sequence_output = all_encoder_layers[-1]
 		# cross a dropout layer
 		sequence_output = self.dropout(sequence_output)
