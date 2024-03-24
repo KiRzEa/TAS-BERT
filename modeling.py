@@ -554,14 +554,16 @@ class BertForTABSAJoint_CRF(nn.Module):
 		ner_logits = self.ner_hidden2tag(sequence_output)
 		
 		# the CRF layer of NER labels
-		ner_loss_list = self.CRF_model(ner_logits, ner_labels, ner_mask.type(torch.ByteTensor).cuda(), reduction='none')
+
 		ner_predict = self.CRF_model.decode(ner_logits, ner_mask.type(torch.ByteTensor).cuda())
 		
 		# the classifier of category & polarity
 		if labels and ner_labels:
 			loss_fct = CrossEntropyLoss()
 			loss = loss_fct(logits, labels)
+			ner_loss_list = self.CRF_model(ner_logits, ner_labels, ner_mask.type(torch.ByteTensor).cuda(), reduction='none')
 			ner_loss = torch.mean(-ner_loss_list)
+			
 			return loss, ner_loss, logits, ner_predict
 		else:
 			return logits, ner_predict
