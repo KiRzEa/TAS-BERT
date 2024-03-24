@@ -21,9 +21,10 @@ from torch.utils.data.distributed import DistributedSampler
 from torch.utils.data.sampler import RandomSampler, SequentialSampler
 from tqdm import tqdm, trange
 
-import tokenization
-from modeling import BertConfig, BertForTABSAJoint, BertForTABSAJoint_CRF
-from optimization import BERTAdam
+# import tokenization
+# from optimization import BERTAdam
+from modeling import BertForTABSAJoint, BertForTABSAJoint_CRF
+from transformers import AutoModel, AutoTokenizer, AutoConfig, AdamW
 
 import datetime
 
