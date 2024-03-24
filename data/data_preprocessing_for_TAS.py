@@ -29,7 +29,9 @@ def get_aspect_sentiment_compose(path, file_name):
 	for ca in aspect_set:
 		for po in sentiment_set:
 			compose_set.append(ca + ' ' + po)
-
+	with open('../compose_set.txt', 'w') as f:
+		for x in compose_set:
+			f.write(f'{x}\n')
 	return compose_set
 
 
