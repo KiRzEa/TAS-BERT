@@ -506,11 +506,14 @@ class BertForTABSAJoint(nn.Module):
 		ner_logits = self.ner_hidden2tag(sequence_output)
 		ner_logits.reshape([-1, self.max_seq_length, self.num_ner_labels])
 
-		loss_fct = CrossEntropyLoss()
-		loss = loss_fct(logits, labels)
-		ner_loss_fct = CrossEntropyLoss(ignore_index=0)
-		ner_loss = ner_loss_fct(ner_logits.view(-1, self.num_ner_labels), ner_labels.view(-1))
-		return loss, ner_loss, logits, ner_logits
+		if labels:
+			loss_fct = CrossEntropyLoss()
+			loss = loss_fct(logits, labels)
+			ner_loss_fct = CrossEntropyLoss(ignore_index=0)
+			ner_loss = ner_loss_fct(ner_logits.view(-1, self.num_ner_labels), ner_labels.view(-1))
+			return loss, ner_loss, logits, ner_logits
+		else:
+			return logits, ner_logits
 
 
 # BERT + CRF
@@ -549,16 +552,19 @@ class BertForTABSAJoint_CRF(nn.Module):
 		# the Classifier of category & polarity
 		logits = self.classifier(pooled_output)
 		ner_logits = self.ner_hidden2tag(sequence_output)
-
+		
 		# the CRF layer of NER labels
 		ner_loss_list = self.CRF_model(ner_logits, ner_labels, ner_mask.type(torch.ByteTensor).cuda(), reduction='none')
-		ner_loss = torch.mean(-ner_loss_list)
 		ner_predict = self.CRF_model.decode(ner_logits, ner_mask.type(torch.ByteTensor).cuda())
-
+		
 		# the classifier of category & polarity
-		loss_fct = CrossEntropyLoss()
-		loss = loss_fct(logits, labels)
-		return loss, ner_loss, logits, ner_predict
+		if labels and ner_labels:
+			loss_fct = CrossEntropyLoss()
+			loss = loss_fct(logits, labels)
+			ner_loss = torch.mean(-ner_loss_list)
+			return loss, ner_loss, logits, ner_predict
+		else:
+			return logtis, ner_predict
 
 #the model for ablation study, separate training
 # BERT + softmax
