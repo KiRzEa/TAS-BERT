@@ -564,7 +564,7 @@ class BertForTABSAJoint_CRF(nn.Module):
 			ner_loss = torch.mean(-ner_loss_list)
 			return loss, ner_loss, logits, ner_predict
 		else:
-			return logtis, ner_predict
+			return logits, ner_predict
 
 #the model for ablation study, separate training
 # BERT + softmax
