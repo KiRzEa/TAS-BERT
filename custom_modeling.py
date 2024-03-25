@@ -38,8 +38,8 @@ class BertForTABSAJoint_CRF(nn.Module):
 				# cf https://github.com/pytorch/pytorch/pull/5617
 				module.weight.data.normal_(mean=0.0, std=config.initializer_range)
 			elif isinstance(module, torch.nn.modules.normalization.LayerNorm):
-				module.beta.data.normal_(mean=0.0, std=config.initializer_range)
-				module.gamma.data.normal_(mean=0.0, std=config.initializer_range)
+				module.weight.data.normal_(mean=0.0, std=config.initializer_range)
+				module.bias.data.normal_(mean=0.0, std=config.initializer_range)
 			if isinstance(module, torch.nn.modules.linear.Linear):
 				module.bias.data.zero_()
 		self.apply(init_weights)
