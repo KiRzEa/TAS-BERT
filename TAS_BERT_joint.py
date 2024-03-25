@@ -24,7 +24,7 @@ from tqdm import tqdm, trange
 # import tokenization
 # from optimization import BERTAdam
 # from modeling import BertForTABSAJoint, BertForTABSAJoint_CRF
-from custom_modeling import BertForABSAJoint_CRF
+from custom_modeling import BertForTABSAJoint_CRF
 from transformers import AutoModel, AutoTokenizer, AutoConfig, AdamW, get_scheduler
 
 import datetime
