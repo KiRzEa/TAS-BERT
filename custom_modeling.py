@@ -15,6 +15,7 @@ import numpy as np
 import tensorflow as tf
 import datetime
 
+import transformers
 from transformers import BertModel
 
 # BERT + CRF
@@ -32,14 +33,14 @@ class BertForTABSAJoint_CRF(nn.Module):
 		self.CRF_model = CRF(num_ner_labels, batch_first=True)
 
 		def init_weights(module):
-			if isinstance(module, (nn.Linear, nn.Embedding)):
+			if isinstance(module, (torch.nn.modules.linear.Linear, transformers.models.bert.modeling_bert.BertEmbeddings)):
 				# Slightly different from the TF version which uses truncated_normal for initialization
 				# cf https://github.com/pytorch/pytorch/pull/5617
 				module.weight.data.normal_(mean=0.0, std=config.initializer_range)
-			elif isinstance(module, BERTLayerNorm):
+			elif isinstance(module, torch.nn.modules.normalization.LayerNorm):
 				module.beta.data.normal_(mean=0.0, std=config.initializer_range)
 				module.gamma.data.normal_(mean=0.0, std=config.initializer_range)
-			if isinstance(module, nn.Linear):
+			if isinstance(module, torch.nn.modules.linear.Linear):
 				module.bias.data.zero_()
 		self.apply(init_weights)
 
