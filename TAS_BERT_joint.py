@@ -23,8 +23,9 @@ from tqdm import tqdm, trange
 
 # import tokenization
 # from optimization import BERTAdam
-from modeling import BertForTABSAJoint, BertForTABSAJoint_CRF
-from transformers import AutoModel, AutoTokenizer, AutoConfig, AdamW
+# from modeling import BertForTABSAJoint, BertForTABSAJoint_CRF
+from custom_modeling import BertForABSAJoint_CRF
+from transformers import AutoModel, AutoTokenizer, AutoConfig, AdamW, get_scheduler
 
 import datetime
 
@@ -481,11 +482,19 @@ def main():
 		 {'params': [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay_rate': 0.0}
 		 ]
 
-	optimizer = BERTAdam(optimizer_parameters,
-						 lr=args.learning_rate,
-						 warmup=args.warmup_proportion,
-						 t_total=num_train_steps)
-
+	# optimizer = BERTAdam(optimizer_parameters,
+	# 					 lr=args.learning_rate,
+	# 					 warmup=args.warmup_proportion,
+	# 					 t_total=num_train_steps)
+	optimizer = AdamW(params=optimizer_parameters,
+					  lr=args.learning_rate)
+	scheduler = get_scheduler(
+		name='linear',
+		optimizer=optimizer,
+		num_warmup_steps=int(args.warum_proportion * num_train_steps),
+		num_training_steps=num_train_steps
+							 )
+	
 
 	# train
 	output_log_file = os.path.join(args.output_dir, "log.txt")
@@ -523,7 +532,8 @@ def main():
 			nb_tr_examples += input_ids.size(0)
 			nb_tr_steps += 1
 			if (step + 1) % args.gradient_accumulation_steps == 0:
-				optimizer.step()    # We have accumulated enought gradients
+				optimizer.step()   # We have accumulated enought gradients
+				scheduler.step()
 				model.zero_grad()
 				global_step += 1
 
