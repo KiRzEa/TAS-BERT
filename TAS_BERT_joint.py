@@ -395,7 +395,7 @@ def main():
 		torch.cuda.manual_seed_all(args.seed)
 
 	# bert_config = BertConfig.from_json_file(args.bert_config_file)
-	bert_config = BertConfig.from_pretrained(args.model_name)
+	bert_config = AutoConfig.from_pretrained(args.model_name)
 
 	if args.max_seq_length > bert_config.max_position_embeddings:
 		raise ValueError(
