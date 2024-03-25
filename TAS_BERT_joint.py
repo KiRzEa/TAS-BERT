@@ -462,7 +462,7 @@ def main():
 	# model and optimizer
 
 	if args.use_crf:
-		model = BertForTABSAJoint_CRF(bert_config, len(label_list), len(ner_label_list))
+		model = BertForTABSAJoint_CRF(args.model_name, bert_config, len(label_list), len(ner_label_list))
 	else:
 		model = BertForTABSAJoint(bert_config, len(label_list), len(ner_label_list), args.max_seq_length)
 
