@@ -408,7 +408,7 @@ def main():
 
 	# tokenizer = tokenization.FullTokenizer(
 	# 	vocab_file=args.vocab_file, tokenize_method=args.tokenize_method, do_lower_case=args.do_lower_case)
-	tokenizer = BertTokenizer(args.model_name, do_lower_case=args.do_lower_case)
+	tokenizer = BertTokenizer.from_pretrained(args.model_name, do_lower_case=args.do_lower_case)
 
 	if os.path.exists(args.output_dir) and os.listdir(args.output_dir):
 		raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
