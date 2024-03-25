@@ -296,11 +296,11 @@ def main():
 	# 					required=True,
 	# 					help="The config json file corresponding to the pre-trained BERT model. \n"
 	# 						 "This specifies the model architecture.")
-	parser.add_argument("--init_checkpoint",
-						default='uncased_L-12_H-768_A-12/pytorch_model.bin',
-						type=str,
-						required=True,
-						help="Initial checkpoint (usually from a pre-trained BERT model).")
+	# parser.add_argument("--init_checkpoint",
+	# 					default='uncased_L-12_H-768_A-12/pytorch_model.bin',
+	# 					type=str,
+	# 					required=True,
+	# 					help="Initial checkpoint (usually from a pre-trained BERT model).")
 	parser.add_argument("--tokenize_method",
 						default='word_split',
 						type=str,
