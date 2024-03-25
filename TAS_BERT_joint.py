@@ -25,7 +25,7 @@ from tqdm import tqdm, trange
 # from optimization import BERTAdam
 # from modeling import BertForTABSAJoint, BertForTABSAJoint_CRF
 from custom_modeling import BertForTABSAJoint_CRF
-from transformers import AutoModel, AutoTokenizer, AutoConfig, AdamW, get_scheduler
+from transformers import BertModel, BertTokenizer, BertConfig, AdamW, get_scheduler
 
 import datetime
 
@@ -395,7 +395,7 @@ def main():
 		torch.cuda.manual_seed_all(args.seed)
 
 	# bert_config = BertConfig.from_json_file(args.bert_config_file)
-	bert_config = AutoConfig.from_pretrained(args.model_name)
+	bert_config = BertConfig.from_pretrained(args.model_name)
 
 	if args.max_seq_length > bert_config.max_position_embeddings:
 		raise ValueError(
@@ -408,7 +408,7 @@ def main():
 
 	# tokenizer = tokenization.FullTokenizer(
 	# 	vocab_file=args.vocab_file, tokenize_method=args.tokenize_method, do_lower_case=args.do_lower_case)
-	tokenizer = AutoTokenizer('args.model_name', do_lower_case=args.do_lower_case)
+	tokenizer = BertTokenizer('args.model_name', do_lower_case=args.do_lower_case)
 
 	if os.path.exists(args.output_dir) and os.listdir(args.output_dir):
 		raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
