@@ -50,7 +50,7 @@ class BertForTABSAJoint_CRF(nn.Module):
 		pooled_output = outputs.pooler_output
 		# get the last hidden layer
 		
-		sequence_output = all_encoder_layers[-1]
+		# sequence_output = all_encoder_layers[-1]
 		# cross a dropout layer
 		sequence_output = self.dropout(sequence_output)
 		pooled_output = self.dropout(pooled_output)
