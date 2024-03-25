@@ -47,7 +47,7 @@ class InputFeatures(object):
 		self.ner_label_ids = ner_label_ids
 		self.ner_mask = ner_mask
 
-def convert_to_feature(examples, max_seq_length, tokenizer, tokenize_method):
+def convert_to_feature(examples, max_seq_length, tokenizer):
 	features = []
 
 	for example in examples:
@@ -270,6 +270,10 @@ def main():
 	parser = argparse.ArgumentParser()
 
 	## Required parameters
+	parser.add_argument("--model_name",
+						default='google-bert/bert-base-uncased',
+						type=str,
+						require=True)
 	parser.add_argument("--data_dir",
 						default='data/semeval2015/three_joint/TO/',
 						type=str,
@@ -389,7 +393,8 @@ def main():
 	if n_gpu > 0:
 		torch.cuda.manual_seed_all(args.seed)
 
-	bert_config = BertConfig.from_json_file(args.bert_config_file)
+	# bert_config = BertConfig.from_json_file(args.bert_config_file)
+	bert_config = BertConfig.from_pretrained(args.model_name)
 
 	if args.max_seq_length > bert_config.max_position_embeddings:
 		raise ValueError(
@@ -400,8 +405,9 @@ def main():
 	label_list = processor.get_labels()
 	ner_label_list = processor.get_ner_labels(args.data_dir)    # BIO or TO tags for ner entity
 
-	tokenizer = tokenization.FullTokenizer(
-		vocab_file=args.vocab_file, tokenize_method=args.tokenize_method, do_lower_case=args.do_lower_case)
+	# tokenizer = tokenization.FullTokenizer(
+	# 	vocab_file=args.vocab_file, tokenize_method=args.tokenize_method, do_lower_case=args.do_lower_case)
+	tokenizer = AutoTokenizer('args.model_name', do_lower_case=args.do_lower_case)
 
 	if os.path.exists(args.output_dir) and os.listdir(args.output_dir):
 		raise ValueError("Output directory ({}) already exists and is not empty.".format(args.output_dir))
