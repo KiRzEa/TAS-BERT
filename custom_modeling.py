@@ -33,14 +33,14 @@ class BertForTABSAJoint_CRF(nn.Module):
 		self.CRF_model = CRF(num_ner_labels, batch_first=True)
 
 		def init_weights(module):
-			if isinstance(module, (torch.nn.modules.linear.Linear, transformers.models.bert.modeling_bert.BertEmbeddings)):
+			if isinstance(module, (nn.Linear, nn.Embedding)):
 				# Slightly different from the TF version which uses truncated_normal for initialization
 				# cf https://github.com/pytorch/pytorch/pull/5617
 				module.weight.data.normal_(mean=0.0, std=config.initializer_range)
-			elif isinstance(module, torch.nn.modules.normalization.LayerNorm):
+			elif isinstance(module, nn.LayerNorm):
 				module.weight.data.normal_(mean=0.0, std=config.initializer_range)
 				module.bias.data.normal_(mean=0.0, std=config.initializer_range)
-			if isinstance(module, torch.nn.modules.linear.Linear):
+			if isinstance(module, nn.Linear):
 				module.bias.data.zero_()
 		self.apply(init_weights)
 
