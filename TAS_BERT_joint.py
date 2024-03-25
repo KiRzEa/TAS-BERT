@@ -491,7 +491,7 @@ def main():
 	scheduler = get_scheduler(
 		name='linear',
 		optimizer=optimizer,
-		num_warmup_steps=int(args.warum_proportion * num_train_steps),
+		num_warmup_steps=int(args.warmup_proportion * num_train_steps),
 		num_training_steps=num_train_steps
 							 )
 	
