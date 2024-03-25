@@ -274,7 +274,7 @@ def main():
 	parser.add_argument("--model_name",
 						default='google-bert/bert-base-uncased',
 						type=str,
-						require=True)
+						required=True)
 	parser.add_argument("--data_dir",
 						default='data/semeval2015/three_joint/TO/',
 						type=str,
