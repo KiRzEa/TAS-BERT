@@ -285,17 +285,17 @@ def main():
 						type=str,
 						required=True,
 						help="The output directory where the model checkpoints will be written.")
-	parser.add_argument("--vocab_file",
-						default='uncased_L-12_H-768_A-12/vocab.txt',
-						type=str,
-						required=True,
-						help="The vocabulary file that the BERT model was trained on.")
-	parser.add_argument("--bert_config_file",
-						default='uncased_L-12_H-768_A-12/bert_config.json',
-						type=str,
-						required=True,
-						help="The config json file corresponding to the pre-trained BERT model. \n"
-							 "This specifies the model architecture.")
+	# parser.add_argument("--vocab_file",
+	# 					default='uncased_L-12_H-768_A-12/vocab.txt',
+	# 					type=str,
+	# 					required=True,
+	# 					help="The vocabulary file that the BERT model was trained on.")
+	# parser.add_argument("--bert_config_file",
+	# 					default='uncased_L-12_H-768_A-12/bert_config.json',
+	# 					type=str,
+	# 					required=True,
+	# 					help="The config json file corresponding to the pre-trained BERT model. \n"
+	# 						 "This specifies the model architecture.")
 	parser.add_argument("--init_checkpoint",
 						default='uncased_L-12_H-768_A-12/pytorch_model.bin',
 						type=str,
