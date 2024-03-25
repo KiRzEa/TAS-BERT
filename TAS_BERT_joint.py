@@ -466,8 +466,8 @@ def main():
 	else:
 		model = BertForTABSAJoint(bert_config, len(label_list), len(ner_label_list), args.max_seq_length)
 
-	if args.init_checkpoint is not None:
-		model.bert.load_state_dict(torch.load(args.init_checkpoint, map_location='cpu'))
+	# if args.init_checkpoint is not None:
+	# 	model.bert.load_state_dict(torch.load(args.init_checkpoint, map_location='cpu'))
 	model.to(device)
 
 	if args.local_rank != -1:
