@@ -639,8 +639,8 @@ def main():
 				writer.write("%s\t" % (str(result[key])))
 			writer.write("\n")
 
-os.makedirs('saved_model', exist_ok=True)
-torch.save(model, 'saved_model.pt')
+	os.makedirs('saved_model', exist_ok=True)
+	torch.save(model, 'saved_model.pt')
 
 if __name__ == "__main__":
 	main()
